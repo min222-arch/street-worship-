@@ -597,6 +597,118 @@ textarea:focus, select:focus {
   font-size:12px;
   color:#D4AF37;
 }
+/* HAMBURGER */
+.hamburger {
+  display: none;
+  flex-direction: column;
+  cursor: pointer;
+}
+
+.hamburger span {
+  width: 25px;
+  height: 3px;
+  background: #fff;
+  margin: 4px 0;
+  transition: 0.4s;
+}
+
+/* MOBILE NAV */
+@media (max-width: 768px) {
+
+  .hamburger {
+    display: flex;
+  }
+
+  .nav-links {
+    position: absolute;
+    top: 70px;
+    right: 0;
+    width: 100%;
+    background: #000;
+    flex-direction: column;
+    text-align: center;
+    display: none;
+  }
+
+  .nav-links a {
+    padding: 15px;
+    border-bottom: 1px solid #222;
+    margin: 0;
+  }
+
+  .nav-links.active {
+    display: flex;
+  }
+}
+/* =========================
+🔥 HAMBURGER ANIMATION
+========================= */
+.hamburger {
+  display: none;
+  flex-direction: column;
+  cursor: pointer;
+  z-index: 1100;
+}
+
+.hamburger span {
+  width: 28px;
+  height: 3px;
+  background: #fff;
+  margin: 5px 0;
+  border-radius: 5px;
+  transition: all 0.4s ease;
+}
+
+/* ANIMATION INTO X */
+.hamburger.active span:nth-child(1) {
+  transform: rotate(45deg) translate(6px, 6px);
+}
+
+.hamburger.active span:nth-child(2) {
+  opacity: 0;
+}
+
+.hamburger.active span:nth-child(3) {
+  transform: rotate(-45deg) translate(7px, -7px);
+}
+
+/* =========================
+🔥 MOBILE MENU (SLIDE DOWN)
+========================= */
+@media (max-width: 768px) {
+
+  .hamburger {
+    display: flex;
+  }
+
+  .nav-links {
+    position: absolute;
+    top: 70px;
+    left: 0;
+    width: 100%;
+    background: rgba(0,0,0,0.95);
+    backdrop-filter: blur(10px);
+
+    flex-direction: column;
+    text-align: center;
+
+    max-height: 0;
+    overflow: hidden;
+
+    transition: max-height 0.4s ease;
+  }
+
+  /* OPEN MENU */
+  .nav-links.active {
+    max-height: 400px;
+  }
+
+  .nav-links a {
+    padding: 18px;
+    border-bottom: 1px solid #222;
+    font-size: 15px;
+  }
+}
 </style>
 </head>
 
@@ -606,19 +718,29 @@ textarea:focus, select:focus {
 
 <nav id="navbar">
 
+  <!-- LEFT SIDE (LOGO + TAGLINE) -->
   <div class="logo-area">
     <img src="STR BLCK.png">
+
     <span class="tagline" id="tagline">
-      Realizing the Glory of God in the cities of the Nations
+      Realizing the Glory of God in the Cities
     </span>
   </div>
 
-  <div class="nav-links">
+  <!-- NAV LINKS -->
+  <div class="nav-links" id="navLinks">
     <a href="#home" class="nav-link active">Home</a>
-    <a href="#about" class="nav-link active">About</a>
+    <a href="#about" class="nav-link">About</a>
     <a href="#events" class="nav-link">Events</a>
     <a href="#community" class="nav-link">Community</a>
     <a href="#give" class="nav-link">Give</a>
+  </div>
+
+  <!-- HAMBURGER -->
+  <div class="hamburger" id="hamburger">
+    <span></span>
+    <span></span>
+    <span></span>
   </div>
 
 </nav>
@@ -996,7 +1118,34 @@ function prayFor(index) {
 
 // INITIAL LOAD
 renderLivePrayers();
+// =========================
+// HAMBURGER MENU
+// =========================
+const hamburger = document.getElementById("hamburger");
+const navLinks = document.getElementById("navLinks");
 
+hamburger.addEventListener("click", () => {
+  navLinks.classList.toggle("active");
+});
+// =========================
+// 🔥 ADVANCED HAMBURGER
+// =========================
+const hamburger = document.getElementById("hamburger");
+const navLinks = document.getElementById("navLinks");
+
+// TOGGLE MENU
+hamburger.addEventListener("click", () => {
+  hamburger.classList.toggle("active");
+  navLinks.classList.toggle("active");
+});
+
+// AUTO CLOSE WHEN CLICKING LINK (MOBILE UX 🔥)
+document.querySelectorAll(".nav-link").forEach(link => {
+  link.addEventListener("click", () => {
+    hamburger.classList.remove("active");
+    navLinks.classList.remove("active");
+  });
+});
 </script>
 
 
