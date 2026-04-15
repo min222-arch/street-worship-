@@ -786,7 +786,6 @@ textarea:focus, select:focus {
   transform: rotate(-45deg) translate(7px,-7px);
 }
 
-/* MOBILE */
 @media (max-width:768px){
 
   .hamburger-new {
@@ -794,6 +793,7 @@ textarea:focus, select:focus {
   }
 
   .nav-new-links {
+    display: flex; /* IMPORTANT */
     position: absolute;
     top: 70px;
     left: 0;
@@ -812,11 +812,20 @@ textarea:focus, select:focus {
   .nav-new-links.active {
     max-height: 400px;
   }
+}
+
+
 
   .nav-new-links a {
     padding: 18px;
     border-bottom: 1px solid #222;
   }
+
+body {
+  padding-top: 80px;
+}
+.nav-new-links {
+  display: flex;
 }
 </style>
 </head>
