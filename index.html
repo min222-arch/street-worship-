@@ -1,0 +1,1004 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Street Praise Movement</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
+
+<style>
+* {
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:'Poppins', sans-serif;
+}
+
+body {
+  background:#000;
+  color:#fff;
+  overflow-x:hidden;
+}
+
+/* PROGRESS BAR */
+.progress {
+  position:fixed;
+  top:0;
+  left:0;
+  height:4px;
+  background:gold;
+  width:0%;
+  z-index:9999;
+}
+
+nav {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  padding: 15px 40px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  background: rgba(0,0,0,0.3);
+  backdrop-filter: blur(10px);
+  transition: 0.4s;
+  z-index: 1000;
+}
+
+/* SCROLL STATE */
+nav.scrolled {
+  background: rgba(0,0,0,0.9);
+  padding: 10px 40px;
+}
+
+/* LOGO AREA */
+.logo-area {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}/* NAVBAR */
+nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  padding: 15px 60px;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  background: rgba(0,0,0,0.3);
+  backdrop-filter: blur(12px);
+  transition: all 0.4s ease;
+
+  z-index: 1000;
+}
+
+/* SCROLLED STATE */
+nav.scrolled {
+  background: rgba(0,0,0,0.9);
+  padding: 10px 60px;
+}
+
+/* LEFT SIDE (LOGO + TEXT) */
+.logo-area {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+/* LOGO */
+.logo-area img {
+  height: 50px;
+  width: auto;
+  object-fit: contain;
+}
+
+/* TAGLINE */
+.tagline {
+  font-size: 12px;
+  color: #ccc;
+  line-height: 1.4;
+  max-width: 260px;
+  opacity: 0.85;
+  transition: all 0.3s ease;
+}
+
+/* HIDE TAGLINE ON SCROLL */
+nav.scrolled .tagline {
+  opacity: 0;
+  transform: translateY(-10px);
+}
+
+/* NAV LINKS */
+.nav-links {
+  display: flex;
+  align-items: center;
+}
+
+.nav-links a {
+  color: #fff;
+  margin-left: 30px;
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 500;
+  position: relative;
+  transition: 0.3s;
+}
+
+/* ACTIVE LINK */
+.nav-links a.active {
+  color: #D4AF37;
+}
+
+/* UNDERLINE ANIMATION */
+.nav-links a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -6px;
+  width: 0%;
+  height: 2px;
+  background: #D4AF37;
+  transition: 0.3s ease;
+}
+
+.nav-links a:hover::after {
+  width: 100%;
+}
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+
+  nav {
+    padding: 15px 20px;
+  }
+
+  .tagline {
+    display: none; /* hide tagline on small screens */
+  }
+
+  .nav-links a {
+    margin-left: 15px;
+    font-size: 13px;
+  }
+
+  .logo-area img {
+    height: 40px;
+  }
+}
+
+/* HERO FULL BLEED */
+.hero {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+}
+
+/* BACKGROUND CONTAINER */
+.hero-bg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0.5;
+}
+
+/* IMAGES */
+.hero-bg img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+
+  object-fit: cover;   /* 🔥 THIS IS THE KEY */
+  object-position: center;
+
+  opacity: 0;
+  transform: scale(1.2);
+  transition: opacity 0.3s ease, transform 6s ease;
+}
+
+/* ACTIVE IMAGE */
+.hero-bg img.active {
+  opacity: 0.3;
+  transform: scale(1);
+}
+.btn {
+  display:inline-block;
+  margin-top:20px;
+  padding:12px 28px;
+  border-radius:30px;
+  background:linear-gradient(45deg,gold,#ffcc00);
+  color:black;
+  font-weight:bold;
+  text-decoration:none;
+}
+
+/* SECTION */
+section {
+  padding:100px 50px;
+  text-align:center;
+}
+
+/* CARDS */
+.cards {
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+  gap:25px;
+  margin-top:40px;
+}
+
+.card {
+  background:#111;
+  padding:25px;
+  border-radius:15px;
+  transition:0.3s;
+}
+
+.card:hover {
+  transform:translateY(-10px);
+  box-shadow:0 20px 40px rgba(255,215,0,0.2);
+}
+
+/* FORM */
+textarea, select {
+  width:100%;
+  padding:12px;
+  border-radius:10px;
+  border:none;
+  margin-top:10px;
+}
+
+/* FADE */
+.fade {
+  opacity:0;
+  transform:translateY(50px);
+  transition:1s;
+}
+
+.fade.show {
+  opacity:1;
+  transform:translateY(0);
+}
+
+/* FOOTER */
+footer {
+  background:#111;
+  padding:40px;
+}
+/* HERO CONTENT */
+.hero-content {
+  position: relative;
+  z-index: 2;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+/* HERO LOGO */
+.hero-content img {
+  width: 120px;
+  margin-bottom: 20px;
+}
+
+/* TITLE */
+.hero h1 {
+  font-size: 65px;
+  letter-spacing: 2px;
+}
+
+.hero span {
+  color: #D4AF37;
+}
+
+/* HERO TEXT */
+.hero p {
+  max-width: 600px;
+  margin-top: 15px;
+  line-height: 1.6;
+  color: #ddd;
+}
+/* EVENTS SECTION */
+#events {
+  padding: 120px 60px;
+  text-align: center;
+}
+
+#events h2 {
+  font-size: 36px;
+  margin-bottom: 40px;
+}
+
+/* GRID */
+.cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 30px;
+}
+
+/* CARD BASE */
+.event-card {
+  position: relative;
+  height: 350px;
+  border-radius: 20px;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+/* BACKGROUND IMAGE */
+.event-bg {
+  width: 115%;
+  height: 100%;
+  object-fit: cover;
+  transition: 0.6s ease;
+}
+
+/* DARK OVERLAY */
+.event-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(0,0,0,0.85), rgba(0,0,0,0.2));
+}
+
+/* INFO */
+.event-info {
+  position: absolute;
+  bottom: 20px;
+  left: 20px;
+  text-align: left;
+  z-index: 2;
+}
+
+/* DATE BADGE */
+.event-date {
+  display: inline-block;
+  background: #D4AF37;
+  color: black;
+  padding: 5px 10px;
+  border-radius: 8px;
+  font-size: 12px;
+  margin-bottom: 10px;
+  font-weight: bold;
+}
+
+/* TITLE */
+.event-info h3 {
+  font-size: 22px;
+  margin-bottom: 5px;
+}
+
+/* LOCATION */
+.event-info p {
+  color: #ccc;
+  font-size: 14px;
+}
+
+/* HOVER EFFECT */
+.event-card:hover .event-bg {
+  transform: scale(1.1);
+}
+
+.event-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 20px 60px rgba(255,215,0,0.2);
+}
+.event-card:hover {
+  box-shadow: 0 0 30px rgba(212,175,55,0.4);
+}
+/* EVENT CARD ENHANCED */
+.event-card {
+  position: relative;
+  height: 370px;
+  border-radius: 20px;
+  overflow: hidden;
+  cursor: pointer;
+  transition: 0.4s ease;
+}
+
+/* GLOW BORDER */
+.event-card::before {
+  content: "";
+  position: absolute;
+  inset: -2px;
+  border-radius: 20px;
+  background: linear-gradient(45deg, transparent, #D4AF37, transparent);
+  opacity: 0;
+  transition: 0.4s;
+}
+
+.event-card:hover::before {
+  opacity: 1;
+}
+
+/* IMAGE */
+.event-bg {
+  width: 120%;
+  height: 100%;
+  object-fit: cover;
+  transition: 0.8s ease;
+}
+
+/* OVERLAY GLASS */
+.event-overlay {
+  position: absolute;
+  inset: 0;
+  backdrop-filter: blur(3px);
+  background: linear-gradient(to top, rgba(0,0,0,0.9), rgba(0,0,0,0.2));
+}
+
+/* INFO */
+.event-info {
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  text-align: center;
+  z-index: 2;
+  width: 90%;
+}
+
+/* DATE BADGE PULSE */
+.event-date {
+  display: inline-block;
+  background: #D4AF37;
+  color: black;
+  padding: 6px 12px;
+  border-radius: 10px;
+  font-size: 12px;
+  font-weight: bold;
+  animation: pulse 2s infinite;
+}
+
+/* PULSE ANIMATION */
+@keyframes pulse {
+  0% { box-shadow: 0 0 0 0 rgba(212,175,55,0.7); }
+  70% { box-shadow: 0 0 0 10px rgba(212,175,55,0); }
+  100% { box-shadow: 0 0 0 0 rgba(212,175,55,0); }
+}
+
+/* TITLE */
+.event-info h3 {
+  font-size: 24px;
+  margin: 10px 0;
+  text-align: center;
+}
+
+.event-info p {
+  text-align: center;
+}
+
+.event-actions {
+  margin-top: 12px;
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+
+
+.event-actions a {
+  display: inline-block;
+  margin-right: 10px;
+  padding: 8px 16px;
+  border-radius: 20px;
+  background: gold;
+  color: black;
+  font-size: 12px;
+  text-decoration: none;
+  font-weight: bold;
+  transition: 0.3s;
+}
+
+.event-actions a:hover {
+  background: #fff;
+}
+
+/* HOVER EFFECT */
+.event-card:hover {
+  transform: translateY(-12px) scale(1.02);
+}
+
+.event-card:hover .event-bg {
+  transform: scale(1.15);
+}
+
+.countdown {
+  margin-top: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  color: #D4AF37;
+  letter-spacing: 1px;
+  animation: glowText 1.5s ease-in-out infinite alternate;
+}
+
+/* GLOW EFFECT */
+@keyframes glowText {
+  from {
+    text-shadow: 0 0 5px #D4AF37, 0 0 10px #D4AF37;
+  }
+  to {
+    text-shadow: 0 0 15px #FFD700, 0 0 25px #FFD700;
+  }
+}
+/* FORM MESSAGE */
+.form-message {
+  margin-top: 10px;
+  font-size: 14px;
+  color: #D4AF37;
+  opacity: 0;
+  transition: 0.3s;
+}
+
+/* INPUT FOCUS EFFECT */
+textarea:focus, select:focus {
+  outline: none;
+  box-shadow: 0 0 10px rgba(212,175,55,0.5);
+  transform: scale(1.02);
+}
+
+/* SUCCESS ANIMATION */
+.success {
+  opacity: 1;
+  animation: fadePop 0.5s ease;
+}
+
+@keyframes fadePop {
+  from {
+    transform: translateY(10px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+.live-prayer {
+  background:#111;
+  padding:15px;
+  border-radius:12px;
+  margin-top:15px;
+  text-align:left;
+  animation:fadePop 0.5s ease;
+}
+
+.live-prayer small {
+  color:#aaa;
+  font-size:11px;
+}
+
+.live-prayer p {
+  margin:10px 0;
+  font-size:14px;
+}
+
+.prayer-footer {
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+
+.pray-btn {
+  background:gold;
+  border:none;
+  padding:5px 12px;
+  border-radius:20px;
+  font-size:12px;
+  font-weight:bold;
+  cursor:pointer;
+}
+
+.pray-count {
+  font-size:12px;
+  color:#D4AF37;
+}
+</style>
+</head>
+
+<body>
+
+<div class="progress" id="progress"></div>
+
+<nav id="navbar">
+
+  <div class="logo-area">
+    <img src="STR BLCK.png">
+    <span class="tagline" id="tagline">
+      Realizing the Glory of God in the cities of the Nations
+    </span>
+  </div>
+
+  <div class="nav-links">
+    <a href="#home" class="nav-link active">Home</a>
+    <a href="#about" class="nav-link active">About</a>
+    <a href="#events" class="nav-link">Events</a>
+    <a href="#community" class="nav-link">Community</a>
+    <a href="#give" class="nav-link">Give</a>
+  </div>
+
+</nav>
+
+<section class="hero">
+
+  <!-- BACKGROUND SLIDES -->
+  <div class="hero-bg">
+    <img src="LEADER 1.JPG" class="active">
+    <img src="LAURINE.jpg"> 
+    <img src="ONJULA.JPG">
+       <img src="SEBEN 1.2.JPG"> 
+    <img src="NUMBER 1..jpeg">
+    <img src="NUMBER 1..jpeg">
+    <img src="NUMBER 2.JPG">
+    <img src="LEADER 2.JPG">
+   
+  </div>
+
+  <!-- DARK OVERLAY -->
+  <div class="overlay"></div>
+
+  <!-- CONTENT -->
+  <div class="hero-content fade">
+    <img src="STR BLCK.png" width="120"><br><br>
+
+    <h1>Street <span>Praise</span></h1>
+
+    <p>
+      From the Streets to the Nations — Raising Worshippers,
+      Building Disciples, Transforming Cities.
+    </p>
+
+    <a href="#" class="btn">Join Movement</a>
+  </div>
+
+</section>
+
+<div class="cards">
+
+  <!-- EVENT 1 -->
+  <div class="card event-card fade">
+    <img src="https://i.pinimg.com/736x/fe/93/07/fe9307c3da391cb5c65694064295b827.jpg" class="event-bg">
+
+    <div class="event-overlay"></div>
+
+    <div class="event-info">
+      <span class="event-date">Every Friday • 5:30PM</span>
+      <h3>Street Worship</h3>
+      <p>Nairobi CBD</p>
+
+      <div class="countdown" id="count1">Loading...</div>
+
+      <div class="event-actions">
+        <a href="#">Join</a>
+        <a href="#">Directions</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- EVENT 2 -->
+  <div class="card event-card fade">
+    <img src="https://i.pinimg.com/736x/48/0a/ea/480aea2f650ddd307484acb9019f7df5.jpg" class="event-bg">
+
+    <div class="event-overlay"></div>
+
+    <div class="event-info">
+      <span class="event-date">Every Wed • 5PM</span>
+      <h3>Bible Study</h3>
+      <p>Emerge Nations</p>
+
+      <div class="countdown" id="count2">Loading...</div>
+
+      <div class="event-actions">
+        <a href="#">Join</a>
+        <a href="#">Directions</a>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<br>
+<br>
+<form id="prayerForm" class="fade" style="max-width:600px;margin:auto;">
+
+  <h2>🙏 Share Your Prayer</h2>
+
+  <textarea id="request" placeholder="Type your prayer request..." required></textarea>
+
+  <select id="visibility">
+    <option value="public">Public (Visible to community)</option>
+    <option value="private">Private (Only you)</option>
+  </select>
+
+  <button class="btn" type="submit">Submit Prayer</button>
+
+  <p id="formMsg" class="form-message"></p>
+
+  <!-- 🔥 LIVE PRAYER FEED INSIDE FORM -->
+  <div id="livePrayers" style="margin-top:40px;"></div>
+
+</form>
+
+<footer>
+  <p>© 2026 Street Praise Movement</p>
+</footer>
+
+<script>
+// =========================
+// SCROLL ANIMATION
+// =========================
+const faders = document.querySelectorAll('.fade');
+
+window.addEventListener('scroll', () => {
+  faders.forEach(el => {
+    const rect = el.getBoundingClientRect().top;
+    if (rect < window.innerHeight - 100) {
+      el.classList.add('show');
+    }
+  });
+});
+
+// =========================
+// PROGRESS BAR
+// =========================
+window.addEventListener("scroll", () => {
+  let scroll = window.scrollY;
+  let height = document.body.scrollHeight - window.innerHeight;
+  document.getElementById("progress").style.width = (scroll / height) * 100 + "%";
+});
+
+// =========================
+// HERO SLIDER
+// =========================
+const slides = document.querySelectorAll(".hero-bg img");
+let currentSlide = 0;
+
+function changeSlide() {
+  slides[currentSlide].classList.remove("active");
+  currentSlide = (currentSlide + 1) % slides.length;
+  slides[currentSlide].classList.add("active");
+}
+
+setInterval(changeSlide, 5000);
+
+// =========================
+// NAVBAR SCROLL EFFECT
+// =========================
+const navbar = document.getElementById("navbar");
+
+window.addEventListener("scroll", () => {
+  if (window.scrollY > 50) {
+    navbar.classList.add("scrolled");
+  } else {
+    navbar.classList.remove("scrolled");
+  }
+});
+
+// =========================
+// ACTIVE NAV LINKS
+// =========================
+const sections = document.querySelectorAll("section");
+const navLinks = document.querySelectorAll(".nav-link");
+
+window.addEventListener("scroll", () => {
+  let current = "";
+
+  sections.forEach(section => {
+    const sectionTop = section.offsetTop - 100;
+    if (window.scrollY >= sectionTop) {
+      current = section.getAttribute("id");
+    }
+  });
+
+  navLinks.forEach(link => {
+    link.classList.remove("active");
+    if (link.getAttribute("href").includes(current)) {
+      link.classList.add("active");
+    }
+  });
+});
+
+// =========================
+// SMOOTH SCROLL
+// =========================
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+  anchor.addEventListener("click", function(e) {
+    e.preventDefault();
+    document.querySelector(this.getAttribute("href")).scrollIntoView({
+      behavior: "smooth"
+    });
+  });
+});
+
+// =========================
+// EVENT CLICK
+// =========================
+document.querySelectorAll(".event-card").forEach(card => {
+  card.addEventListener("click", () => {
+    alert("Event details coming soon");
+  });
+});
+
+// =========================
+// COUNTDOWN TIMER
+// =========================
+function getNextEvent(day, hour, minute) {
+  const now = new Date();
+  const target = new Date();
+
+  target.setHours(hour, minute, 0, 0);
+
+  let diff = day - now.getDay();
+  if (diff < 0 || (diff === 0 && target <= now)) diff += 7;
+
+  target.setDate(now.getDate() + diff);
+  return target;
+}
+
+function startCountdown(id, day, hour, minute) {
+  const el = document.getElementById(id);
+
+  function update() {
+    const diff = getNextEvent(day, hour, minute) - new Date();
+
+    const d = Math.floor(diff / (1000 * 60 * 60 * 24));
+    const h = Math.floor((diff / (1000 * 60 * 60)) % 24);
+    const m = Math.floor((diff / (1000 * 60)) % 60);
+    const s = Math.floor((diff / 1000) % 60);
+
+    el.innerHTML = `${d}d ${h}h ${m}m ${s}s`;
+  }
+
+  update();
+  setInterval(update, 1000);
+}
+
+startCountdown("count1", 5, 17, 30);
+startCountdown("count2", 3, 17, 0);
+
+// =========================
+// 🔥 SOCIAL PRAYER SYSTEM
+// =========================
+const form = document.getElementById("prayerForm");
+const requestInput = document.getElementById("request");
+const visibility = document.getElementById("visibility");
+const msg = document.getElementById("formMsg");
+const liveContainer = document.getElementById("livePrayers");
+
+let prayers = JSON.parse(localStorage.getItem("prayers")) || [];
+
+// AVATAR GENERATOR
+function getAvatar(name) {
+  const colors = ["#D4AF37", "#ff6b6b", "#6bc5ff", "#9b59b6"];
+  const color = colors[Math.floor(Math.random() * colors.length)];
+
+  return `
+    <div style="
+      width:35px;
+      height:35px;
+      border-radius:50%;
+      background:${color};
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-size:14px;
+      font-weight:bold;
+    ">
+      ${name.charAt(0).toUpperCase()}
+    </div>
+  `;
+}
+
+// TIME AGO
+function timeAgo(date) {
+  const seconds = Math.floor((new Date() - new Date(date)) / 1000);
+
+  const intervals = [
+    { label: "y", seconds: 31536000 },
+    { label: "mo", seconds: 2592000 },
+    { label: "d", seconds: 86400 },
+    { label: "h", seconds: 3600 },
+    { label: "m", seconds: 60 }
+  ];
+
+  for (let i of intervals) {
+    const count = Math.floor(seconds / i.seconds);
+    if (count > 0) return `${count}${i.label} ago`;
+  }
+
+  return "just now";
+}
+
+// RENDER FEED
+function renderLivePrayers() {
+  liveContainer.innerHTML = "";
+
+  prayers
+    .filter(p => p.type === "public")
+    .slice()
+    .reverse()
+    .forEach((p, index) => {
+
+      if (!p.count) p.count = 0;
+      if (!p.name) p.name = "Anonymous";
+
+      const div = document.createElement("div");
+      div.className = "live-prayer";
+
+      div.innerHTML = `
+        <div style="display:flex;gap:10px;align-items:center;">
+          ${getAvatar(p.name)}
+          <div>
+            <strong>${p.name}</strong><br>
+            <small>${timeAgo(p.date)}</small>
+          </div>
+        </div>
+
+        <p>"${p.text}"</p>
+
+        <div class="prayer-footer">
+          <button class="pray-btn" onclick="prayFor(${index})">
+            🙏 Pray
+          </button>
+
+          <span class="pray-count">
+            ${p.count} praying
+          </span>
+        </div>
+      `;
+
+      liveContainer.appendChild(div);
+    });
+
+  localStorage.setItem("prayers", JSON.stringify(prayers));
+}
+
+// SUBMIT
+form.addEventListener("submit", function(e) {
+  e.preventDefault();
+
+  const text = requestInput.value.trim();
+  const type = visibility.value;
+
+  if (text.length < 5) {
+    msg.innerText = "Please enter a meaningful prayer request.";
+    msg.classList.add("success");
+    return;
+  }
+
+  const newPrayer = {
+    name: "Anonymous",
+    text: text,
+    type: type,
+    date: new Date(),
+    count: 0
+  };
+
+  prayers.push(newPrayer);
+
+  msg.innerText = "🙏 Prayer shared!";
+  msg.classList.add("success");
+
+  form.reset();
+
+  renderLivePrayers();
+});
+
+// PRAY BUTTON
+function prayFor(index) {
+  prayers[index].count++;
+  renderLivePrayers();
+}
+
+// INITIAL LOAD
+renderLivePrayers();
+
+</script>
+
+
+</body>
+</html>
