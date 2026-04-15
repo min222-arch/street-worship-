@@ -709,35 +709,140 @@ textarea:focus, select:focus {
     font-size: 15px;
   }
 }
+/* NAVBAR NEW */
+.navbar-new {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  padding: 15px 20px;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  background: rgba(0,0,0,0.6);
+  backdrop-filter: blur(10px);
+  z-index: 2000;
+}
+
+/* LEFT */
+.nav-new-left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.logo-new {
+  height: 45px;
+}
+
+/* TAGLINE */
+.tagline-new {
+  font-size: 11px;
+  color: #ccc;
+  max-width: 180px;
+  min-height: 18px;
+}
+
+/* LINKS */
+.nav-new-links {
+  display: flex;
+  gap: 25px;
+}
+
+.nav-new-links a {
+  color: #fff;
+  text-decoration: none;
+  font-size: 14px;
+}
+
+.nav-new-links a:hover {
+  color: #D4AF37;
+}
+
+/* HAMBURGER */
+.hamburger-new {
+  display: none;
+  flex-direction: column;
+  cursor: pointer;
+}
+
+.hamburger-new span {
+  width: 28px;
+  height: 3px;
+  background: #fff;
+  margin: 4px 0;
+  transition: 0.4s;
+}
+
+/* ANIMATION */
+.hamburger-new.active span:nth-child(1) {
+  transform: rotate(45deg) translate(6px,6px);
+}
+.hamburger-new.active span:nth-child(2) {
+  opacity: 0;
+}
+.hamburger-new.active span:nth-child(3) {
+  transform: rotate(-45deg) translate(7px,-7px);
+}
+
+/* MOBILE */
+@media (max-width:768px){
+
+  .hamburger-new {
+    display: flex;
+  }
+
+  .nav-new-links {
+    position: absolute;
+    top: 70px;
+    left: 0;
+    width: 100%;
+    background: rgba(0,0,0,0.95);
+
+    flex-direction: column;
+    text-align: center;
+
+    max-height: 0;
+    overflow: hidden;
+
+    transition: max-height 0.4s ease;
+  }
+
+  .nav-new-links.active {
+    max-height: 400px;
+  }
+
+  .nav-new-links a {
+    padding: 18px;
+    border-bottom: 1px solid #222;
+  }
+}
 </style>
 </head>
 
 <body>
 
 <div class="progress" id="progress"></div>
+<nav class="navbar-new">
 
-<nav id="navbar">
+  <div class="nav-new-left">
+    <img src="STR BLCK.png" class="logo-new">
 
-  <!-- LEFT SIDE (LOGO + TAGLINE) -->
-  <div class="logo-area">
-    <img src="STR BLCK.png">
-
-    <span class="tagline" id="tagline">
+    <span class="tagline-new" id="taglineNew">
       Realizing the Glory of God in the Cities
     </span>
   </div>
 
-  <!-- NAV LINKS -->
-  <div class="nav-links" id="navLinks">
-    <a href="#home" class="nav-link active">Home</a>
-    <a href="#about" class="nav-link">About</a>
-    <a href="#events" class="nav-link">Events</a>
-    <a href="#community" class="nav-link">Community</a>
-    <a href="#give" class="nav-link">Give</a>
+  <div class="nav-new-links" id="navNewLinks">
+    <a href="#home">Home</a>
+    <a href="#about">About</a>
+    <a href="#events">Events</a>
+    <a href="#community">Community</a>
+    <a href="#give">Give</a>
   </div>
 
-  <!-- HAMBURGER -->
-  <div class="hamburger" id="hamburger">
+  <div class="hamburger-new" id="hamburgerNew">
     <span></span>
     <span></span>
     <span></span>
@@ -1119,35 +1224,58 @@ function prayFor(index) {
 // INITIAL LOAD
 renderLivePrayers();
 // =========================
-// HAMBURGER MENU
-// =========================
-const hamburger = document.getElementById("hamburger");
-const navLinks = document.getElementById("navLinks");
 
-hamburger.addEventListener("click", () => {
-  navLinks.classList.toggle("active");
-});
-// =========================
-// 🔥 ADVANCED HAMBURGER
-// =========================
-const hamburger = document.getElementById("hamburger");
-const navLinks = document.getElementById("navLinks");
+// NAVBAR NEW
+const hamburgerNew = document.getElementById("hamburgerNew");
+const navNewLinks = document.getElementById("navNewLinks");
 
-// TOGGLE MENU
-hamburger.addEventListener("click", () => {
-  hamburger.classList.toggle("active");
-  navLinks.classList.toggle("active");
+hamburgerNew.addEventListener("click", () => {
+  hamburgerNew.classList.toggle("active");
+  navNewLinks.classList.toggle("active");
 });
 
-// AUTO CLOSE WHEN CLICKING LINK (MOBILE UX 🔥)
-document.querySelectorAll(".nav-link").forEach(link => {
+// AUTO CLOSE
+document.querySelectorAll(".nav-new-links a").forEach(link => {
   link.addEventListener("click", () => {
-    hamburger.classList.remove("active");
-    navLinks.classList.remove("active");
+    hamburgerNew.classList.remove("active");
+    navNewLinks.classList.remove("active");
   });
 });
+
+// 🔥 TAGLINE ANIMATION
+const textsNew = [
+  "Realizing the Glory of God in the Cities",
+  "Revival in the Streets",
+  "Jesus Revealed in Public Spaces",
+  "Taking Worship Beyond Walls",
+  "Transforming Cities Through Praise"
+];
+
+let i = 0, j = 0, deleting = false;
+const taglineNew = document.getElementById("taglineNew");
+
+function typeNew(){
+  let current = textsNew[i];
+  taglineNew.innerText = current.substring(0,j);
+
+  if(!deleting){
+    j++;
+    if(j > current.length){
+      deleting = true;
+      setTimeout(typeNew,1200);
+      return;
+    }
+  } else {
+    j--;
+    if(j === 0){
+      deleting = false;
+      i = (i+1)%textsNew.length;
+    }
+  }
+
+  setTimeout(typeNew, deleting ? 40 : 80);
+}
+typeNew();
 </script>
-
-
 </body>
 </html>
