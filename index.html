@@ -1038,7 +1038,6 @@ function timeAgo(date) {
   return "just now";
 }
 
-// RENDER FEED
 function renderLivePrayers() {
   liveContainer.innerHTML = "";
 
@@ -1047,9 +1046,6 @@ function renderLivePrayers() {
     .slice()
     .reverse()
     .forEach((p, index) => {
-
-      if (!p.count) p.count = 0;
-      if (!p.name) p.name = "Anonymous";
 
       const div = document.createElement("div");
       div.className = "live-prayer";
@@ -1066,13 +1062,40 @@ function renderLivePrayers() {
         <p>"${p.text}"</p>
 
         <div class="prayer-footer">
-          <button class="pray-btn" onclick="prayFor(${index})">
-            🙏 Pray
-          </button>
+          <button class="pray-btn" onclick="prayFor(${index})">🙏 Pray</button>
+          <span class="pray-count">${p.count} praying</span>
+        </div>
 
-          <span class="pray-count">
-            ${p.count} praying
-          </span>
+        <!-- COMMENT INPUT -->
+        <input 
+          placeholder="Write a comment..." 
+          onkeypress="addComment(event, ${index}, this)"
+          style="width:100%;margin-top:10px;padding:8px;border-radius:8px;border:none;"
+        >
+
+        <!-- COMMENTS -->
+        <div class="comments">
+          ${(p.comments || []).map((c, i) => `
+            <div style="margin-top:10px;padding-left:10px;border-left:2px solid gold;">
+              <strong>${c.name}</strong>: ${c.text}
+
+              <!-- REPLIES -->
+              <div style="margin-left:15px;">
+                ${(c.replies || []).map(r => `
+                  <div style="font-size:12px;color:#ccc;margin-top:5px;">
+                    ↳ <strong>${r.name}</strong>: ${r.text}
+                  </div>
+                `).join("")}
+              </div>
+
+              <!-- REPLY INPUT -->
+              <input 
+                placeholder="Reply..." 
+                onkeypress="addReply(event, ${index}, ${i}, this)"
+                style="width:90%;margin-top:5px;padding:5px;border-radius:6px;border:none;font-size:12px;"
+              >
+            </div>
+          `).join("")}
         </div>
       `;
 
@@ -1081,7 +1104,6 @@ function renderLivePrayers() {
 
   localStorage.setItem("prayers", JSON.stringify(prayers));
 }
-
 // SUBMIT
 form.addEventListener("submit", function(e) {
   e.preventDefault();
@@ -1095,14 +1117,15 @@ form.addEventListener("submit", function(e) {
     return;
   }
 
-  const newPrayer = {
-    name: "Anonymous",
-    text: text,
-    type: type,
-    date: new Date(),
-    count: 0
-  };
-
+const newPrayer = {
+  id: Date.now(),
+  name: "Anonymous",
+  text: text,
+  type: type,
+  date: new Date(),
+  count: 0,
+  comments: []
+};
   prayers.push(newPrayer);
 
   msg.innerText = "🙏 Prayer shared!";
@@ -1174,6 +1197,38 @@ function typeNew(){
   setTimeout(typeNew, deleting ? 40 : 80);
 }
 typeNew();
+function addReply(e, pIndex, cIndex, input) {
+  if (e.key === "Enter" && input.value.trim()) {
+
+    if (!prayers[pIndex].comments[cIndex].replies) {
+      prayers[pIndex].comments[cIndex].replies = [];
+    }
+
+    const reply = {
+      name: "User",
+      text: input.value
+    };
+
+    prayers[pIndex].comments[cIndex].replies.push(reply);
+    input.value = "";
+
+    renderLivePrayers();
+  }
+}
+function addReply(e, pIndex, cIndex, input) {
+  if (e.key === "Enter" && input.value.trim()) {
+
+    const reply = {
+      name: "User",
+      text: input.value
+    };
+
+    prayers[pIndex].comments[cIndex].replies.push(reply);
+    input.value = "";
+
+    renderLivePrayers();
+  }
+}
 </script>
 </body>
 </html>
